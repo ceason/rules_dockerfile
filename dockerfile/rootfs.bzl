@@ -18,7 +18,7 @@ set -euo pipefail
 DOCKERFILE=$(realpath "$1"); shift
 IIDFILE="$PWD/$1"; shift
 cd $(dirname $DOCKERFILE)
-docker build --iidfile="$IIDFILE" -f "$(basename $DOCKERFILE)" "$@" .
+docker build --network=host --iidfile="$IIDFILE" -f "$(basename $DOCKERFILE)" "$@" .
 touch -t 197001010000 "$IIDFILE"
         """,
         execution_requirements = {
