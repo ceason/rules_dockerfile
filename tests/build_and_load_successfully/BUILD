@@ -2,7 +2,7 @@ load("//dockerfile:image.bzl", "dockerfile_image")
 
 dockerfile_image(
     name = "alpine-with-packages",
-    dockerfile = ":Dockerfile",
+    dockerfile = "Dockerfile",
 )
 
 #sh_test(
