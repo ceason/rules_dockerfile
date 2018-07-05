@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-aspnetapp
+spec:
+  ports:
+  - {name: http, port: 80, targetPort: 80}
+  selector:
+    app: dotnet-aspnetapp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-aspnetapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels: &podLabels
+      app: dotnet-aspnetapp
+  template:
+    metadata:
+      labels: {<<: *podLabels}
+    spec:
+      containers:
+      - name: server
+        image: dotnet-aspnetapp:latest
+        terminationMessagePolicy: FallbackToLogsOnError
+        args: [aspnetapp]
+        ports:
+        - containerPort: 80
+          name: http
