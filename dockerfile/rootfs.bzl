@@ -14,13 +14,13 @@ def _dockerfile_rootfs_impl(ctx):
             imageid_file.path
         ] + ctx.attr.docker_build_args,
         command = """
-set -euo pipefail
-DOCKERFILE=$(realpath "$1"); shift
-IIDFILE="$PWD/$1"; shift
-cd $(dirname $DOCKERFILE)
-docker build --network=host --iidfile="$IIDFILE" -f "$(basename $DOCKERFILE)" "$@" .
-touch -t 197001010000 "$IIDFILE"
-        """,
+            set -euo pipefail
+            DOCKERFILE=$(realpath "$1"); shift
+            IIDFILE="$PWD/$1"; shift
+            cd $(dirname $DOCKERFILE)
+            docker build --network=host --iidfile="$IIDFILE" -f "$(basename $DOCKERFILE)" "$@" .
+            touch -t 197001010000 "$IIDFILE"
+            """,
         execution_requirements = {
             "no-cache": "1",
             "no-remote": "1",
@@ -37,15 +37,15 @@ touch -t 197001010000 "$IIDFILE"
             ctx.outputs.rootfs.path
         ],
         command = """
-set -euo pipefail
-IMAGEID=$(cat $1)
-OUTFILE=$2
-TMP_CONTAINER=$(mktemp -u XXXXX|tr '[:upper:]' '[:lower:]')
-docker create --name=$TMP_CONTAINER $IMAGEID > /dev/null
-docker export --output=$OUTFILE "$TMP_CONTAINER" > /dev/null
-docker rm "$TMP_CONTAINER" > /dev/null
-touch -t 197001010000 "$OUTFILE"
-        """,
+            set -euo pipefail
+            IMAGEID=$(cat $1)
+            OUTFILE=$2
+            TMP_CONTAINER=$(mktemp -u XXXXX|tr '[:upper:]' '[:lower:]')
+            docker create --name=$TMP_CONTAINER $IMAGEID > /dev/null
+            docker export --output=$OUTFILE "$TMP_CONTAINER" > /dev/null
+            docker rm "$TMP_CONTAINER" > /dev/null
+            touch -t 197001010000 "$OUTFILE"
+            """,
         execution_requirements = {
             "no-remote": "1",
         },
