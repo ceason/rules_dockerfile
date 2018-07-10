@@ -1,3 +1,6 @@
 build --workspace_status_command=./tools/print-workspace-status.sh --stamp=yes
+build --action_env=DOCKER_HOST
+build --action_env=DOCKER_CERT_PATH
+build --action_env=DOCKER_TLS_VERIFY
 test --verbose_failures=true
 test --test_output=errors

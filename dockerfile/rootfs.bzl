@@ -13,9 +13,10 @@ def _dockerfile_rootfs_impl(ctx):
             ctx.file.dockerfile.path,
             imageid_file.path
         ] + ctx.attr.docker_build_args,
+        use_default_shell_env = True,
         command = """
             set -euo pipefail
-            DOCKERFILE=$(realpath "$1"); shift
+            DOCKERFILE=$(readlink "$1"); shift
             IIDFILE="$PWD/$1"; shift
             cd $(dirname $DOCKERFILE)
             docker build --network=host --iidfile="$IIDFILE" -f "$(basename $DOCKERFILE)" "$@" .
@@ -36,6 +37,7 @@ def _dockerfile_rootfs_impl(ctx):
             imageid_file.path,
             ctx.outputs.rootfs.path
         ],
+        use_default_shell_env = True,
         command = """
             set -euo pipefail
             IMAGEID=$(cat $1)
