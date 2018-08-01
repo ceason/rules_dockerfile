@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-    - image: gcr.io/cloud-builders/bazel:latest
+    - image: netchris/gitops-release-updater@sha256:7023ff60cd558623eeff7ef7e16e1b33a0e5a53ac16c260bec345686545efefd
       entrypoint: [/bin/bash]
     steps:
     - checkout
