@@ -10,4 +10,5 @@ jobs:
         # language=bash
         command: |
           set -euo pipefail
+          mkdir -p /workspace
           bazel build //...
