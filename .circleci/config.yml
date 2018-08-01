@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: gcr.io/cloud-builders/bazel:latest
+      entrypoint: [/bin/bash]
+    steps:
+    - checkout
+    - run:
+        # language=bash
+        command: |
+          set -euo pipefail
+          pwd
+          find / -type f -name WORKSPACE
+          bazel build //...
